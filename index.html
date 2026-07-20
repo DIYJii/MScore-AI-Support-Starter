@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        async function doRedirect() {
+            try {
+                // 同じリポジトリ内にある Link.txt を読み込む
+                const r = await fetch('Link.txt');
+                if (!r.ok) throw new Error('Status: ' + r.status);
+                const u = (await r.text()).trim();
+                
+                if (u.startsWith('http')) {
+                    // 目的のURL（Googleのリンク）へジャンプ
+                    window.location.replace(u);
+                } else {
+                    document.body.innerText = 'Error: Invalid URL in Link.txt';
+                }
+            } catch (e) {
+                document.body.innerText = 'Error loading redirection: ' + e.message;
+            }
+        }
+        window.onload = doRedirect;
+    </script>
+</head>
+<body>
+    リダイレクト中... / Redirecting...
+</body>
+</html>
